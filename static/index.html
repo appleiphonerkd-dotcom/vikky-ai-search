@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vikky AI Search</title>
+<style>
+body{background:#10172a;color:white;font-family:Arial;text-align:center;padding:25px}
+h1{color:#8eacff;margin-top:60px}
+input{width:90%;padding:16px;border-radius:12px;border:0;font-size:16px}
+button{padding:14px 25px;background:#6688ff;color:white;border:0;border-radius:10px;margin:15px;font-size:16px}
+#answer{background:#202c45;padding:20px;border-radius:12px;text-align:left;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<h1>🔎 Vikky AI Search</h1>
+<p>आपका अपना AI सर्च इंजन</p>
+<input id="q" placeholder="अपना सवाल लिखें...">
+<br>
+<button onclick="search()">Search करें</button>
+<div id="answer"></div>
+<script>
+async function search(){
+let q=document.getElementById('q').value;
+let a=document.getElementById('answer');
+if(!q)return;
+a.innerText="खोज जारी है...";
+try{
+let r=await fetch('/api/search',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({query:q,language:'auto'})
+});
+let d=await r.json();
+a.innerText=d.answer||d.error||"कोई जवाब नहीं मिला";
+if(d.sources){
+d.sources.forEach(s=>{
+a.innerText+="\n\n"+s.title+"\n"+s.url;
+});
+}
+}catch(e){a.innerText="सर्वर से कनेक्शन नहीं हो पाया।";}
+}
+</script>
+</body>
+</html>
