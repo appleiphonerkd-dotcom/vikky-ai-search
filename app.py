@@ -65,7 +65,7 @@ def search(req: SearchRequest):
         client = genai.Client(api_key=gemini_key)
 
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-3.8-flash",
             contents=f"""
             You are Vikky AI Search.
             Answer in {lang}.
