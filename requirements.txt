@@ -2,3 +2,4 @@ fastapi>=0.110
 uvicorn[standard]>=0.27
 openai>=1.40
 requests>=2.31
+google-genai
